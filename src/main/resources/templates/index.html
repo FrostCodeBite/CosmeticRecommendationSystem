@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="~{layouts::page_head}"></head>
+<body>
+	<nav th:replace="~{layouts::page_navbar}"></nav>
+	
+	<div>
+  		<!-- <h1 class="text-center my-4">Welcome</h1> -->
+  		<div class="row g-0">
+			<div class="col container" style="background-color:#ecd1c6; padding: 5%">
+				<h1>Find Your Perfect Beauty Match – Smart Cosmetic Recommendations Just for You!</h1>
+				<p>New to cosmetics or a beauty pro? Let’s personalize your perfect match!</p>
+				<div >
+					<a role="button" class="btn btn-success" href="/survey">I Used Cosmetic Before!</a>
+					<a role="button" class="btn btn-danger" href="/newSurvey">I Never Use Cosmetic Before!</a>
+				</div>
+			</div>
+		    <div class="col">
+		    	<img src="https://cdn.i-scmp.com/sites/default/files/d8/images/canvas/2023/08/25/8827217a-becb-4313-bef6-e406087578ef_262041ed.jpg" class="img-fluid" alt="...">
+		    </div>
+		</div>
+  	</div>
+  	
+  	<footer th:replace="~{layouts::page_footer}"></footer>
+	
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="~{layouts::page_head}"></head>
+<body>
+	<!-- NAVIGATION BAR -->
+	<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body sticky-top" data-bs-theme="dark" th:fragment="page_navbar">
+  		<div class="container">
+	  		<a class="navbar-brand" href="/">
+		      <img src="https://scontent-prg1-1.xx.fbcdn.net/v/t39.30808-6/302277103_451591030345407_6264637935223347615_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ya39XDZBfjwQ7kNvgFvYDLu&_nc_oc=AdkQstn7HVY56IFaJyZdFTY_WwmnI6_R0zVW5txjRzgthPtkSHZPpRQexkHhcKV06k1P9LcGAew2vMPJLz8scVnd&_nc_zt=23&_nc_ht=scontent-prg1-1.xx&_nc_gid=xR3Fa1UNyzb44m2HWGDdaw&oh=00_AYEwOnBVLMma1ZYqcM8QlC9lphhn6ATdJfjHxmTpW-Ulfg&oe=67E62CF6" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+		      CRS
+		    </a>
+		    <div class="navbar-nav align-left me-auto mb-2 mb-lg-0">
+		        <a class="nav-link" href="/survey">Existing</a>
+		        <a class="nav-link" href="/newSurvey">New</a>
+	      	</div>
+	      	
+	      	<!-- SCROLLSPY -->
+			<ul id="scrollspy" class="nav nav-pills" th:each="rec : ${category}">
+		      	<li class="nav-item">
+			      <a class="nav-link" th:href="@{#}+${rec}" th:text="${rec}"></a>
+			    </li>
+			</ul>
+			
+			<input class="btn btn-primary" type="submit" name="submit" value="Submit" form="rating-form">
+	  	</div>
+	</nav>
+	
+	<div class="container py-3">
+  		<h1 class="text-center my-4">Please Rate Cosmetics That You Used Before:</h1>
+  	</div>
+  	
+  	<form id="rating-form" method="post" th:object="${cosmetics}" data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2 container" tabindex="0" th:fragment="page_scrollspy">
+	  	<div th:each="rec : ${cosmetics}">
+	  		<!-- <h4 th:text="${rec.category}"></h4>	 -->	
+			<table class="table container">
+		  		<thead>
+		  			<tr>
+		  				<th>Image</th>
+		  				<th>Product Name</th>
+		  				<th>Category</th>
+		  				<th>Barcode</th>
+		  				<th>Rating</th>
+		  			</tr>
+		  		</thead>
+		  		<tbody class="table-group-divider" >
+		  			<tr  th:each="r, rStat : ${cosmetics.arrayList}" th:id="${r.category}">
+		  				<td><img th:src="${r.imageLink}" class="card" style="width: 100px; height: 100px"/></td>
+		  				<td th:text="${r.productName}"></td>
+		  				<td th:text="${r.category}"></td>
+		  				<td th:text="${r.barcode}"></td>
+		  				<td>
+		  					<select  th:field="*{arrayList[__${rStat.index}__].raterScore}">
+								<option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}"></option>
+							</select>
+						</td>
+						<td>
+							<input type="hidden" th:field="*{arrayList[__${rStat.index}__].raterID}">
+						</td>
+						<td>
+							<input type="hidden" th:field="*{arrayList[__${rStat.index}__].barcode}">
+						</td>
+		  			</tr>
+		  		</tbody>
+		 	</table>
+	  	</div>  	
+	</form>
+	
+  	<footer th:replace="~{layouts::page_footer}"></footer>
+	
+</body>
+</html>

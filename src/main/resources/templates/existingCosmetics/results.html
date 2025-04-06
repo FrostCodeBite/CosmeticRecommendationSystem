@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="~{layouts::page_head}"></head>
+<body>
+	<nav th:replace="~{layouts::page_navbar}"></nav>
+	
+	<div class="container py-3">
+  		<h1 class="text-center my-4">Recommended Cosmetics Based on Collaborative Filtering</h1>
+  	</div>
+  	
+  	<!-- DISPLAY RESULT AS TABLE -->
+  	<table class="table container" th:if="${recommend!=null and !recommend.empty}">
+  		<thead>
+  			<tr>
+  				<th>Image</th>
+  				<th>Barcode</th>
+  				<th>Product Name</th>
+  				<th>Category</th>
+  				<th>Brand</th>
+  				<th>Price</th>
+  				<th>Ingredients</th>
+  				<th>Rating Score</th>
+  				<th th:if="${recommend[0].isCloseScoreExist()}">Closeness Score</th>
+  			</tr>
+  		</thead>
+  		<tbody class="table-group-divider">
+  			<tr th:each="rec, recStat: ${recommend}">
+  				<td><img th:src="${rec.imageLink}" class="img-thumbnail" style="width: 100; height: 100"/></td>
+  				<td th:text="${rec.barcode}"></td>
+  				<td th:text="${rec.productName}"></td>
+  				<td th:text="${rec.category}"></td>
+  				<td th:text="${rec.brand}"></td>
+  				<td th:text="${rec.price}"></td>
+  				<td th:text="${rec.ingredients}"></td>
+  				<td th:text="${rec.ratingScore}"></td>
+  				<td th:text="${rec.closeScore}" th:if="${recommend[0].isCloseScoreExist()}"></td>
+  			</tr>
+  		</tbody>
+  	</table>
+  	
+  	<h1 class="text-center text-danger" th:if="${recommend.empty}">There are no results for recommendation!</h1>
+  	
+  	<!-- IMAGE CARD -->
+  	<!-- <div class="container">
+	  	<div class="row row-cols-1 row-cols-md-4 g-4">
+		  <div class="col" th:each="rec : ${recommend}">
+		    <div class="card h-100">
+		      <img th:src="${rec.imageLink}" class="card-img-top" alt="Card image cap">
+		      <div class="card-body">
+		        <h5 class="card-title" th:text="${rec.productName}"></h5>
+		        <p class="card-text" th:text="${rec.ingredients}"></p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+  	</div> -->
+  	
+  	<footer th:replace="~{layouts::page_footer}"></footer>
+	
+</body>
+</html>

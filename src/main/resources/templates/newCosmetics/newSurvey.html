@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts::page_head}"></head>
+<body>
+	<nav th:replace="~{layouts::page_navbar}"></nav>
+	
+	<div class="container py-3">
+  		<h1 class="text-center my-4">Please Tell Us More About You:</h1>
+  	</div>
+  	
+  	<form method="post" th:object="${newSurvey}" class="container">
+  		<div class="row mb-3">
+  			<div class="col">
+		  		<label for="skinOptions" class="form-label">What is Your Skin Type?</label>
+		  		<p th:if="${#fields.hasErrors('ingredients')}" th:errorclass="text-danger" th:errors="${newSurvey.ingredients}"></p>
+		  		<select class="form-select form-select-lg mb-3" aria-label="Default select example" id="skinOptions" onchange="myFunction()">
+					<option selected>Select Your Skin Type:</option>
+					<option value="DrySkin">Dry Skin</option>
+					<option value="OilySkin">Oily Skin</option>
+					<option value="CombinationSkin">Combination Skin</option>
+					<option value="NormalSkin">Normal Skin</option>
+				</select>	
+				
+				<div class="input-group">
+					<span class="input-group-text">Recommended Ingredients:</span>
+					<textarea class="form-control fs-5" aria-label="With textarea" th:field="${newSurvey.ingredients}" id="ingredientResult"></textarea>
+				</div>
+    		</div>
+    		<div class="col">
+    			<label for="brandOption" class="form-label">What Brands Do You Prefer?</label>
+    			<p th:if="${#fields.hasErrors('brand')}" th:errorclass="text-danger" th:errors="${newSurvey.brand}"></p>
+				<select class="form-select form-select-lg mb-3" id="brandOption" multiple="multiple" th:field="${newSurvey.brand}">
+			        <option th:each="rec : ${brand}" th:text="${rec}" th:value="${rec}"></option>
+		    	</select>
+    		</div>
+    	</div>
+    	<div class="row mb-3">
+    		<p class="form-label">What Are Your Min and Max Price Per Cosmetic?</p>
+    		<div class="col">
+    			<label for="minPrice" class="form-label">Minimum Price:</label>
+    			<p th:if="${#fields.hasErrors('minPrice')}" th:errorclass="text-danger" th:errors="${newSurvey.minPrice}"></p>
+    			<input class="form-control fs-5" th:field="${newSurvey.minPrice}" type="text" placeholder="Minimum Price" aria-label="default input example" id="minPrice">
+    		</div>
+    		<div class="col">
+    			<label for="maxPrice" class="form-label">Maximum Price:</label>
+    			<p th:if="${#fields.hasErrors('maxPrice')}" th:errorclass="text-danger" th:errors="${newSurvey.maxPrice}"></p>
+    			<input class="form-control fs-5" th:field="${newSurvey.maxPrice}" type="text" placeholder="Maximum Price" aria-label="default input example" id="maxPrice">
+    		</div>
+    	</div>
+    	<input class="btn btn-primary" type="submit" name="submit" value="Submit">
+  	</form>
+  	
+	<footer th:replace="~{layouts::page_footer}"></footer>
+	
+	<script>
+	function myFunction() {
+		  var x = document.getElementById("skinOptions").value;
+		  var result = "";
+		  if(x == "DrySkin") {
+		  	result = "Hyaluronic Acid, Glycerin, Lactic Acid, Oil-Based Cleansers";
+		  } else if (x == "OilySkin") {
+			result = "Retinol, Hyaluronic Acid, Salicylic Acid, Niacinimide";
+		  } else if (x == "CombinationSkin") {
+			result = "Niacinimide, Salicylic Acid, Vitamins C, Vitamin E, Ceramides, Fatty Acids";
+		  } else if (x == "NormalSkin") {
+			result = "Hyaluronic Acid, Peptides, Glycolic, Lactic Acid, Retinol";
+		  }
+		  document.getElementById("ingredientResult").innerHTML = result;
+	}
+	</script>
+</body>
+</html>
